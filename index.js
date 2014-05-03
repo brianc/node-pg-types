@@ -1,5 +1,6 @@
 var textParsers = require('./lib/textParsers');
 var binaryParsers = require('./lib/binaryParsers');
+var arrayParser = require('./lib/arrayParser');
 
 var typeParsers = {
   text: {},
@@ -41,5 +42,6 @@ binaryParsers.init(function(oid, converter) {
 
 module.exports = {
   getTypeParser: getTypeParser,
-  setTypeParser: setTypeParser
+  setTypeParser: setTypeParser,
+  arrayParser: arrayParser
 };
