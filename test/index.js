@@ -237,6 +237,20 @@ var tests = [{
     assert.deepEqual(val, [-12345678.1234567, 12345678.12345678]);
   }
 },{
+  name : 'array/date',
+  format : 'text',
+  dataTypeID: 1182,
+  actual: '{2014-01-01,2015-12-31}',
+  expected :function(val){
+    var now = new Date(2014, 0, 1);
+    var then = new Date(2015, 11, 31);
+    assert.equal(val.length, 2);
+    val.forEach(function(element, index) {
+      var match = index ? then : now;
+      assert.UTCDate(element, match.getUTCFullYear(), match.getUTCMonth(), match.getUTCDate(), match.getUTCHours(), 0, 0, 0);
+    });
+  }
+},{
   name: 'binary-string/varchar',
   format: 'binary',
   dataTypeID: 1043,
