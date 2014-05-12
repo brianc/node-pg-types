@@ -81,7 +81,7 @@ var tests = [{
   dataTypeID: 1184,
   actual: '2011-01-23 22:05:00.68-06',
   expected: function(val) {
-    assert.UTCDate(val, 2011, 0, 24, 4, 5, 00, 680);
+    assert.UTCDate(val, 2011, 0, 24, 4, 5, 0, 680);
   }
 }, {
   name: 'timestampz with huge miliseconds in UTC',
@@ -114,9 +114,9 @@ var tests = [{
   dataTypeID: 1082,
   actual: '2010-10-31',
   expected: function(val) {
-    var now = new Date(2010, 9, 31)
+    var now = new Date(2010, 9, 31);
     assert.UTCDate(val, 2010, now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), 0, 0, 0);
-    assert.equal(val.getHours(), now.getHours())
+    assert.equal(val.getHours(), now.getHours());
   }
 },{
   name: 'interval time',
@@ -124,7 +124,7 @@ var tests = [{
   dataTypeID: 1186,
   actual: '01:02:03',
   expected: function(val) {
-    assert.deepEqual(val, {'hours':1, 'minutes':2, 'seconds':3})
+    assert.deepEqual(val, {'hours':1, 'minutes':2, 'seconds':3});
   }
 },{
   name: 'interval long',
@@ -132,7 +132,7 @@ var tests = [{
   dataTypeID: 1186,
   actual: '1 year -32 days',
   expected: function(val) {
-    assert.deepEqual(val, {'years':1, 'days':-32})
+    assert.deepEqual(val, {'years':1, 'days':-32});
   }
 },{
   name: 'interval combined negative',
@@ -140,7 +140,7 @@ var tests = [{
   dataTypeID: 1186,
   actual: '1 day -00:00:03',
   expected: function(val) {
-    assert.deepEqual(val, {'days':1, 'seconds':-3})
+    assert.deepEqual(val, {'days':1, 'seconds':-3});
   }
 },{
   name: 'bytea',
@@ -237,6 +237,20 @@ var tests = [{
     assert.deepEqual(val, [-12345678.1234567, 12345678.12345678]);
   }
 },{
+  name : 'array/date',
+  format : 'text',
+  dataTypeID: 1182,
+  actual: '{2014-01-01,2015-12-31}',
+  expected :function(val){
+    var now = new Date(2014, 0, 1);
+    var then = new Date(2015, 11, 31);
+    assert.equal(val.length, 2);
+    val.forEach(function(element, index) {
+      var match = index ? then : now;
+      assert.UTCDate(element, match.getUTCFullYear(), match.getUTCMonth(), match.getUTCDate(), match.getUTCHours(), 0, 0, 0);
+    });
+  }
+},{
   name: 'binary-string/varchar',
   format: 'binary',
   dataTypeID: 1043,
@@ -329,20 +343,20 @@ var assert = require('./assert');
 
 describe('type parsing', function() {
   tests.forEach(function(test) {
-    test.format = test.format || 'text'
+    test.format = test.format || 'text';
     it('correctly parses ' + test.name + ' (' + test.format + ')', function() {
-      var parser = pgTypes.getTypeParser(test.dataTypeID, test.format)
-      var result = parser(test.actual)
+      var parser = pgTypes.getTypeParser(test.dataTypeID, test.format);
+      var result = parser(test.actual);
       if(typeof test.expected == 'function') {
-        return test.expected(result)
+        return test.expected(result);
       }
-      assert.strictEqual(result, test.expected)
-    })
-  })
-})
+      assert.strictEqual(result, test.expected);
+    });
+  });
+});
 
 describe('interface', function() {
   it('exports text parsers by default', function() {
-    assert.strictEqual(pgTypes.getTypeParser(23), pgTypes.getTypeParser(23, 'text'))
-  })
-})
+    assert.strictEqual(pgTypes.getTypeParser(23), pgTypes.getTypeParser(23, 'text'));
+  });
+});
