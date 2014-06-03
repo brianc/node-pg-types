@@ -1,4 +1,5 @@
 var parse = require('../').getTypeParser(1009, 'text');
+var dateParse = require('../').getTypeParser(1115, 'text');
 var assert = require('./assert');
 
 describe('array parsing', function() {
@@ -36,5 +37,17 @@ describe('array parsing', function() {
     var input = '{NULL,NULL}';
     var expected = [null,null];
     assert.deepEqual(parse(input), expected);
+  });
+
+  it("test timestamp without timezone[]", function(){
+    var input = '{2010-12-11 09:09:04.1}';
+    var expected = JSON.stringify([new Date(2010,11,11,9,9,4,100)]);
+    assert.deepEqual(JSON.stringify(dateParse(input)), expected);
+  });
+
+  it("test timestamp with timezone[]", function(){
+    var input = '{2010-12-11 09:09:04-08:00}';
+    var expected = "[\"2010-12-11T17:09:04.000Z\"]";
+    assert.deepEqual(JSON.stringify(dateParse(input)), expected);
   });
 });
