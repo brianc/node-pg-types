@@ -38,6 +38,12 @@ describe('array parsing', function() {
     var expected = [null,null];
     assert.deepEqual(parse(input), expected);
   });
+  
+  it("testing BOOL array", function(){
+    var input = '{t,NULL,f}';
+    var expected = [true,null,false];
+    assert.deepEqual(parse(input), expected);
+  });
 
   it("test timestamp without timezone[]", function(){
     var input = '{2010-12-11 09:09:04.1}';
