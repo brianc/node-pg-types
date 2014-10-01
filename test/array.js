@@ -1,5 +1,6 @@
-var parse = require('../').getTypeParser(1009, 'text');
-var dateParse = require('../').getTypeParser(1115, 'text');
+var types = require('../')
+var parse = types.getTypeParser(1009, 'text');
+var dateParse = types.getTypeParser(1115, 'text');
 var assert = require('./assert');
 
 describe('array parsing', function() {
@@ -42,7 +43,7 @@ describe('array parsing', function() {
   it("testing BOOL array", function(){
     var input = '{t,NULL,f}';
     var expected = [true,null,false];
-    assert.deepEqual(parse(input), expected);
+    assert.deepEqual(types.getTypeParser(1000, 'text')(input), expected);
   });
 
   it("test timestamp without timezone[]", function(){
