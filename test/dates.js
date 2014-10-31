@@ -13,6 +13,13 @@ describe("date parser", function() {
     );
   });
 
+  it("parses date with more-standard formats", function() {
+    assert.equal(
+      parse("2010-12-11 09:09:04Z").toString(),
+      new Date("2010-12-11T09:09:04Z").toString()
+    );
+  });
+
   var testForMs = function(part, expected) {
     var dateString = "2010-01-01 01:01:01" + part;
     it("testing for correcting parsing of " + dateString, function() {
