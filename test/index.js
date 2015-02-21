@@ -128,6 +128,14 @@ var tests = [{
     assert.deepEqual(val, {'hours':1, 'minutes':2, 'seconds':3});
   }
 },{
+  name: 'interval time with milliseconds',
+  format: 'text',
+  dataTypeID: 1186,
+  actual: '01:02:03:456',
+  expected: function(val) {
+    assert.deepEqual(val, {'hours':1, 'minutes':2, 'seconds':3, 'milliseconds': 456});
+  }
+},{
   name: 'interval long',
   format: 'text',
   dataTypeID: 1186,
