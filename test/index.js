@@ -347,6 +347,22 @@ var tests = [{
   dataTypeID: 25,
   actual: new Buffer([0x73, 0x6c, 0x61, 0x64, 0x64, 0x61]),
   expected: 'sladda'
+},{
+  name: 'point',
+  format: 'text',
+  dataTypeID: 600,
+  actual: '(25.1,50.5)',
+  expected: function(val) {
+    assert.deepEqual(val, { x: 25.1, y: 50.5 });
+  }
+},{
+  name: 'circle',
+  format: 'text',
+  dataTypeID: 718,
+  actual: '<(25,10),5>',
+  expected: function(val) {
+    assert.deepEqual(val, { x: 25, y: 10, radius: 5 });
+  }
 }];
 
 var pgTypes = require('../');
