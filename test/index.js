@@ -196,6 +196,14 @@ var tests = [{
     assert.deepEqual(val, ['hello world']);
   }
 },{
+  name : 'array/bytea',
+  format : 'text',
+  dataTypeID: 1001,
+  actual: '{"\\\\x00000000"}',
+  expected :function(val){
+    assert.deepEqual(val, [new Buffer('00000000', 'hex')]);
+  }
+},{
   name : 'array/numeric',
   format : 'text',
   dataTypeID: 1231,
