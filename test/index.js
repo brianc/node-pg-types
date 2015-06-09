@@ -4,7 +4,7 @@ var printf = require('pff')
 var getTypeParser = require('../').getTypeParser
 var types = require('./types')
 
-test('pg-types', function (t) {
+test('types', function (t) {
   Object.keys(types).forEach(function (typeName) {
     var type = types[typeName]
     t.test(typeName, function (t) {
