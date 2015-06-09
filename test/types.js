@@ -1,3 +1,5 @@
+'use strict'
+
 exports['string/varchar'] = {
   format: 'text',
   id: 1043,
@@ -91,7 +93,7 @@ exports.timestamptz = {
     ],
     [
       '2010-10-30 13:10:01+05',
-      dateEquals(2010, 9, 30, 8, 10, 01, 0)
+      dateEquals(2010, 9, 30, 8, 10, 1, 0)
     ]
   ]
 }
