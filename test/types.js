@@ -73,6 +73,87 @@ exports.boolean = {
   ]
 }
 
+exports.timestamptz = {
+  format: 'text',
+  id: 1184,
+  tests: [
+    [
+      '2010-10-31 14:54:13.74-05:30',
+      dateEquals(2010, 9, 31, 20, 24, 13, 740)
+    ],
+    [
+      '2011-01-23 22:05:00.68-06',
+       dateEquals(2011, 0, 24, 4, 5, 0, 680)
+    ],
+    [
+      '2010-10-30 14:11:12.730838Z',
+      dateEquals(2010, 9, 30, 14, 11, 12, 730)
+    ],
+    [
+      '2010-10-30 13:10:01+05',
+      dateEquals(2010, 9, 30, 8, 10, 01, 0)
+    ]
+  ]
+}
+
+exports.timestamp = {
+  format: 'text',
+  id: 1114,
+  tests: [
+    [
+      '2010-10-31 00:00:00', 
+      function (t, value) {
+        t.equal(
+          value.toUTCString(),
+          new Date(2010, 9, 31, 0, 0, 0, 0, 0).toUTCString()
+        )
+        t.equal(
+          value.toString(),
+          new Date(2010, 9, 31, 0, 0, 0, 0, 0, 0).toString()
+        )
+      }
+    ]
+  ]
+}
+
+exports.date = {
+  format: 'text',
+  id: 1082,
+  tests: [
+    ['2010-10-31', function (t, value) {
+      var now = new Date(2010, 9, 31)
+      dateEquals(
+        2010,
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        now.getUTCHours(), 0, 0, 0)(t, value)
+      t.equal(value.getHours(), now.getHours())
+    }]
+  ]
+}
+
+exports.interval = {
+  format: 'text',
+  id: 1186,
+  tests: [
+    ['01:02:03', function (t, value) {
+      t.equal(value.toPostgres(), '3 seconds 2 minutes 1 hours')
+      t.deepEqual(value, {hours: 1, minutes: 2, seconds: 3})
+    }],
+    ['01:02:03:456', function (t, value) {
+      t.deepEqual(value, {hours: 1, minutes:2, seconds: 3, milliseconds: 456})
+    }],
+    ['1 year -32 days', function (t, value) {
+      t.equal(value.toPostgres(), '-32 days 1 years')
+      t.deepEqual(value, {years: 1, days: -32})
+    }],
+    ['1 day -00:00:03', function (t, value) {
+      t.equal(value.toPostgres(), '-3 seconds 1 days')
+      t.deepEqual(value, {days: 1, seconds: -3})
+    }]
+  ]
+}
+
 exports.bytea = {
   format: 'text',
   id: 17,
@@ -199,6 +280,25 @@ exports['array/float8'] = {
   ]
 }
 
+exports['array/date'] = {
+  format: 'text',
+  id: 1182,
+  tests: [
+    ['{2014-01-01,2015-12-31}', function (t, value) {
+      var expecteds = [new Date(2014, 0, 1), new Date(2015, 11, 31)]
+      t.equal(value.length, 2)
+      value.forEach(function (date, index) {
+        var expected = expecteds[index]
+        dateEquals(
+          expected.getUTCFullYear(),
+          expected.getUTCMonth(),
+          expected.getUTCDate(),
+          expected.getUTCHours(), 0, 0, 0)(t, date)
+      })
+    }]
+  ]
+}
+
 exports['binary-string/varchar'] = {
   format: 'binary',
   id: 1043,
@@ -293,4 +393,11 @@ exports.circle = {
 
 function hex (string) {
   return parseInt(string, 16)
+}
+
+function dateEquals () {
+  var timestamp = Date.UTC.apply(Date, arguments)
+  return function (t, value) {
+    t.equal(value.toUTCString(), new Date(timestamp).toUTCString())
+  }
 }
