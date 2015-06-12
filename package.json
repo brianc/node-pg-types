@@ -25,5 +25,8 @@
     "pff": "^1.0.0",
     "tap-spec": "^4.0.0",
     "tape": "^4.0.0"
+  },
+  "dependencies": {
+    "postgres-array": "~1.0.0"
   }
 }
