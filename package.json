@@ -27,6 +27,7 @@
     "tape": "^4.0.0"
   },
   "dependencies": {
+    "ap": "~0.2.0",
     "postgres-array": "~1.0.0"
   }
 }
