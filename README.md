@@ -29,8 +29,8 @@ Just as another example -- not saying this is a good idea -- let's say you want 
 ```js
 var types = require('pg').types
 var moment = require('moment')
-var TIMESTAMPTZ_OID = 1114
-var TIMESTAMP_OID = 1184
+var TIMESTAMPTZ_OID = 1184
+var TIMESTAMP_OID = 1114
 var parseFn = function(val) {
    return val === null ? null : moment(val)
 }
