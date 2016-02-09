@@ -262,6 +262,16 @@ exports['array/int8'] = {
   ]
 }
 
+exports['array/oid'] = {
+  format: 'text',
+  id: 1028,
+  tests: [
+    ['{25864,25860}', function (t, value) {
+      t.deepEqual(value, [25864, 25860])
+    }]
+  ]
+}
+
 exports['array/float4'] = {
   format: 'text',
   id: 1021,
