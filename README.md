@@ -48,7 +48,7 @@ $ psql -c "select typname, oid, typarray from pg_type order by oid"
 If you want to find out the OID of a specific type:
 
 ```bash
-$ psql -c "select typname, oid, typarray from pg_type where where typname = 'daterange' order by oid"
+$ psql -c "select typname, oid, typarray from pg_type where typname = 'daterange' order by oid"
 ```
 
 :smile:
