@@ -17,8 +17,7 @@ Let's do something I commonly like to do on projects: return 64-bit integers `(i
 ```js
 var types = require('pg').types
 types.setTypeParser(20, function(val) {
-  //remember: all values returned from the server are either NULL or a string
-  return val === null ? null : parseInt(val)
+  return parseInt(val)
 })
 ```
 
