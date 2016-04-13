@@ -41,7 +41,13 @@ _note: I've never done that with my dates, and I'm not 100% sure moment can pars
 If you're thinking "gee, this seems pretty handy, but how can I get a list of all the OIDs in the database and what they correspond to?!?!?!" worry not:
 
 ```bash
-$ psql -c "select typname, oid, typarray from pg_type where typtype = 'b' order by oid"
+$ psql -c "select typname, oid, typarray from pg_type order by oid"
+```
+
+If you want to find out the OID of a specific type:
+
+```bash
+$ psql -c "select typname, oid, typarray from pg_type where typname = 'daterange' order by oid"
 ```
 
 :smile:
