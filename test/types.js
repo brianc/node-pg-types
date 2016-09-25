@@ -103,7 +103,7 @@ exports.timestamp = {
   id: 1114,
   tests: [
     [
-      '2010-10-31 00:00:00', 
+      '2010-10-31 00:00:00',
       function (t, value) {
         t.equal(
           value.toUTCString(),
@@ -122,15 +122,7 @@ exports.date = {
   format: 'text',
   id: 1082,
   tests: [
-    ['2010-10-31', function (t, value) {
-      var now = new Date(2010, 9, 31)
-      dateEquals(
-        2010,
-        now.getUTCMonth(),
-        now.getUTCDate(),
-        now.getUTCHours(), 0, 0, 0)(t, value)
-      t.equal(value.getHours(), now.getHours())
-    }]
+    ['2010-10-31', '2010-10-31']
   ]
 }
 
@@ -297,17 +289,9 @@ exports['array/date'] = {
   id: 1182,
   tests: [
     ['{2014-01-01,2015-12-31}', function (t, value) {
-      var expecteds = [new Date(2014, 0, 1), new Date(2015, 11, 31)]
-      t.equal(value.length, 2)
-      value.forEach(function (date, index) {
-        var expected = expecteds[index]
-        dateEquals(
-          expected.getUTCFullYear(),
-          expected.getUTCMonth(),
-          expected.getUTCDate(),
-          expected.getUTCHours(), 0, 0, 0)(t, date)
-      })
-    }]
+        t.deepEqual(value, ['2014-01-01', '2015-12-31'])
+      }
+    ]
   ]
 }
 
