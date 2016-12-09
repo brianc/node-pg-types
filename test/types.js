@@ -171,6 +171,16 @@ exports.bytea = {
   ]
 }
 
+exports['array/boolean'] = {
+    format: 'text',
+    id: 1000,
+    tests: [
+        ['{true,false}', function (t, value) {
+            t.deepEqual(value, [true, false])
+        }]
+    ]
+}
+
 exports['array/char'] = {
   format: 'text',
   id: 1014,
