@@ -69,7 +69,13 @@ exports.boolean = {
   format: 'text',
   id: 16,
   tests: [
+    ['TRUE', true],
     ['t', true],
+    ['true', true],
+    ['y', true],
+    ['yes', true],
+    ['on', true],
+    ['1', true],
     ['f', false],
     [null, null]
   ]
@@ -169,6 +175,16 @@ exports.bytea = {
       t.ok(buffer.equals(value))
     }]
   ]
+}
+
+exports['array/boolean'] = {
+    format: 'text',
+    id: 1000,
+    tests: [
+        ['{true,false}', function (t, value) {
+            t.deepEqual(value, [true, false])
+        }]
+    ]
 }
 
 exports['array/char'] = {
