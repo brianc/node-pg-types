@@ -278,6 +278,16 @@ exports['array/int8'] = {
   ]
 }
 
+exports['array/point'] = {
+  format: 'text',
+  id: 1017,
+  tests: [
+    ['{"(25.1,50.5)","(10.1,40)"}', function (t, value) {
+      t.deepEqual(value, [{x: 25.1, y: 50.5}, {x: 10.1, y: 40}])
+    }]
+  ]
+}
+
 exports['array/oid'] = {
   format: 'text',
   id: 1028,
