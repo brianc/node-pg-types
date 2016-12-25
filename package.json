@@ -1,6 +1,6 @@
 {
   "name": "pg-types",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "Query result type converters for node-postgres",
   "main": "index.js",
   "scripts": {
