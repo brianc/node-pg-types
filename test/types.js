@@ -140,6 +140,39 @@ exports.date = {
   ]
 }
 
+exports.inet = {
+  format: 'text',
+  id: 869,
+  tests: [
+    ['8.8.8.8', '8.8.8.8'],
+    ['2001:4860:4860::8888', '2001:4860:4860::8888'],
+    ['127.0.0.1', '127.0.0.1'],
+    ['fd00:1::40e', 'fd00:1::40e'],
+    ['1.2.3.4', '1.2.3.4']
+  ]
+}
+
+exports.cidr = {
+  format: 'text',
+  id: 650,
+  tests: [
+    ['172.16.0.0/12', '172.16.0.0/12'],
+    ['fe80::/10', 'fe80::/10'],
+    ['fc00::/7', 'fc00::/7'],
+    ['192.168.0.0/24', '192.168.0.0/24'],
+    ['10.0.0.0/8', '10.0.0.0/8']
+  ]
+}
+
+exports.macaddr = {
+  format: 'text',
+  id: 829,
+  tests: [
+    ['08:00:2b:01:02:03', '08:00:2b:01:02:03'],
+    ['16:10:9f:0d:66:00', '16:10:9f:0d:66:00']
+  ]
+}
+
 exports.interval = {
   format: 'text',
   id: 1186,
@@ -333,6 +366,48 @@ exports['array/date'] = {
           expected.getUTCDate(),
           expected.getUTCHours(), 0, 0, 0)(t, date)
       })
+    }]
+  ]
+}
+
+exports['array/inet'] = {
+  format: 'text',
+  id: 1041,
+  tests: [
+    ['{8.8.8.8}', function (t, value) {
+      t.deepEqual(value, ['8.8.8.8']);
+    }],
+    ['{2001:4860:4860::8888}', function (t, value) {
+      t.deepEqual(value, ['2001:4860:4860::8888']);
+    }],
+    ['{127.0.0.1,fd00:1::40e,1.2.3.4}', function (t, value) {
+      t.deepEqual(value, ['127.0.0.1', 'fd00:1::40e', '1.2.3.4']);
+    }]
+  ]
+}
+
+exports['array/cidr'] = {
+  format: 'text',
+  id: 651,
+  tests: [
+    ['{172.16.0.0/12}', function (t, value) {
+      t.deepEqual(value, ['172.16.0.0/12']);
+    }],
+    ['{fe80::/10}', function (t, value) {
+      t.deepEqual(value, ['fe80::/10']);
+    }],
+    ['{10.0.0.0/8,fc00::/7,192.168.0.0/24}', function (t, value) {
+      t.deepEqual(value, ['10.0.0.0/8', 'fc00::/7', '192.168.0.0/24']);
+    }]
+  ]
+}
+
+exports['array/macaddr'] = {
+  format: 'text',
+  id: 1040,
+  tests: [
+    ['{08:00:2b:01:02:03,16:10:9f:0d:66:00}', function (t, value) {
+      t.deepEqual(value, ['08:00:2b:01:02:03', '16:10:9f:0d:66:00']);
     }]
   ]
 }
