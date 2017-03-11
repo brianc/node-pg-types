@@ -31,6 +31,6 @@
     "postgres-array": "~1.0.0",
     "postgres-bytea": "~1.0.0",
     "postgres-date": "~1.0.0",
-    "postgres-interval": "~1.0.0"
+    "postgres-interval": "^1.1.0"
   }
 }
