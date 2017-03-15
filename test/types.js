@@ -337,6 +337,22 @@ exports['array/date'] = {
   ]
 }
 
+exports['json/int8'] = {
+  format: 'text',
+  id: 114,
+  tests: [
+    [
+      '{"id": -9223372036854775808, "another_big_int": -9223372036854775807}',
+      function (t, value) {
+        t.deepEqual(value, {
+          id: "-9223372036854775808",
+          another_big_int: "-9223372036854775807"
+        })
+      }
+    ]
+  ]
+}
+
 exports['binary-string/varchar'] = {
   format: 'binary',
   id: 1043,
