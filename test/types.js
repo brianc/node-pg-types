@@ -273,7 +273,14 @@ exports['array/bytea'] = {
       t.ok(Array.isArray(value))
       t.equal(value.length, 1)
       t.ok(buffer.equals(value[0]))
-    }]
+    }],
+    ['{NULL,"\\\\x4e554c4c"}', function (t, value) {
+      var buffer = new Buffer('4e554c4c', 'hex')
+      t.ok(Array.isArray(value))
+      t.equal(value.length, 2)
+      t.equal(value[0], null)
+      t.ok(buffer.equals(value[1]))
+    }],
   ]
 }
 
