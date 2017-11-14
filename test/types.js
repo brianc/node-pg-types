@@ -473,6 +473,14 @@ exports['binary-smallint/int2'] = {
   ]
 }
 
+exports['binary-bigint/int8'] = {
+  format: 'binary',
+  id: 20,
+  tests: [
+    [new Buffer([0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]), '9223372036854775807']
+  ]
+}
+
 exports['binary-oid'] = {
   format: 'binary',
   id: 26,
