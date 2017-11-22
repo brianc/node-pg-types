@@ -391,6 +391,19 @@ exports['array/date'] = {
   ]
 }
 
+exports['array/interval'] = {
+  format: 'text',
+  id: 1187,
+  tests: [
+    ['{01:02:03,1 day -00:00:03}', function (t, value) {
+      var expecteds = [{hours: 1, minutes: 2, seconds: 3},
+                       {days: 1, seconds: -3}]
+      t.equal(value.length, 2)
+      t.deepEqual(value, expecteds);
+    }]
+  ]
+}
+
 exports['array/inet'] = {
   format: 'text',
   id: 1041,
