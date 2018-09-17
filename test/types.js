@@ -332,6 +332,29 @@ exports['array/int8'] = {
   ]
 }
 
+exports['array/json'] = {
+  format: 'text',
+  id: 199,
+  tests: [
+    [
+      '{{1,2},{[3],"[4,5]"},{null,NULL}}',
+      function (t, value) {
+        t.deepEqual(value, [
+          [1, 2],
+          [[3], [4, 5]],
+          [null, null],
+        ])
+      }
+    ]
+  ]
+}
+
+exports['array/jsonb'] = {
+  format: 'text',
+  id: 3807,
+  tests: exports['array/json'].tests
+}
+
 exports['array/point'] = {
   format: 'text',
   id: 1017,
