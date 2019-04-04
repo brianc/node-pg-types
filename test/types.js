@@ -109,7 +109,7 @@ exports.timestamp = {
   id: 1114,
   tests: [
     [
-      '2010-10-31 00:00:00', 
+      '2010-10-31 00:00:00',
       function (t, value) {
         t.equal(
           value.toUTCString(),
@@ -195,7 +195,7 @@ exports.interval = {
       t.equal(value.toPostgres(), '3 seconds 2 minutes 1 hours')
       t.deepEqual(value, {hours: 1, minutes: 2, seconds: 3})
     }],
-    ['01:02:03:456', function (t, value) {
+    ['01:02:03.456', function (t, value) {
       t.deepEqual(value, {hours: 1, minutes:2, seconds: 3, milliseconds: 456})
     }],
     ['1 year -32 days', function (t, value) {
