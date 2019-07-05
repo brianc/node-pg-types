@@ -1,10 +1,12 @@
 var textParsers = require('./lib/textParsers');
 var binaryParsers = require('./lib/binaryParsers');
 var arrayParser = require('./lib/arrayParser');
+var builtinTypes = require('./lib/builtins');
 
 exports.getTypeParser = getTypeParser;
 exports.setTypeParser = setTypeParser;
 exports.arrayParser = arrayParser;
+exports.builtins = builtinTypes;
 
 var typeParsers = {
   text: {},

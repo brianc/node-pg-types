@@ -28,13 +28,11 @@ Just as another example -- not saying this is a good idea -- let's say you want 
 ```js
 var types = require('pg').types
 var moment = require('moment')
-var TIMESTAMPTZ_OID = 1184
-var TIMESTAMP_OID = 1114
 var parseFn = function(val) {
    return val === null ? null : moment(val)
 }
-types.setTypeParser(TIMESTAMPTZ_OID, parseFn)
-types.setTypeParser(TIMESTAMP_OID, parseFn)
+types.setTypeParser(types.builtins.TIMESTAMPTZ, parseFn)
+types.setTypeParser(types.builtins.TIMESTAMP, parseFn)
 ```
 _note: I've never done that with my dates, and I'm not 100% sure moment can parse all the date strings returned from postgres.  It's just an example!_
 
