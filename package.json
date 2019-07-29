@@ -4,7 +4,8 @@
   "description": "Query result type converters for node-postgres",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | tap-spec"
+    "test": "tape test/*.js | tap-spec",
+    "test-ts-types": "npx tsd"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,8 @@
   "devDependencies": {
     "pff": "^1.0.0",
     "tap-spec": "^4.0.0",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "tsd": "^0.7.4"
   },
   "dependencies": {
     "pg-int8": "1.0.1",

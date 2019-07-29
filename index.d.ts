@@ -61,7 +61,7 @@ export enum TypeId {
     REGROLE = 4096
 }
 
-type builtinsTypes =
+export type builtinsTypes =
     'BOOL' |
     'BYTEA' |
     'CHAR' |
@@ -123,12 +123,15 @@ type builtinsTypes =
     'REGNAMESPACE' |
     'REGROLE';
 
-type TypesBuiltins = {[key in builtinsTypes]: TypeId};
+export type TypesBuiltins = {[key in builtinsTypes]: TypeId};
+
+export type TypeFormat = 'text' | 'binary';
 
 export const builtins: TypesBuiltins;
 
-export const setTypeParser: (id: TypeId, format: string | ((value: string) => any)) => void;
+export function setTypeParser (id: TypeId, parseFn: ((value: string) => any)): void;
+export function setTypeParser (id: TypeId, format: TypeFormat, parseFn: (value: string) => any): void;
 
-export const getTypeParser: (id: TypeId, format?: string) => any
+export const getTypeParser: (id: TypeId, format?: TypeFormat) => any
 
 export const arrayParser: (source: string, transform: (entry: any) => any) => any[];
