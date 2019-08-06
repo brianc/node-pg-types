@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js | tap-spec && npm run test-ts",
-    "test-ts": "if-node-version ">= 8" tsd"
+    "test-ts": "if-node-version '>= 8' tsd"
   },
   "repository": {
     "type": "git",
