@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js | tap-spec && npm run test-ts",
-    "test-ts": "tsd"
+    "test-ts": "if-node-version ">= 8" tsd"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/brianc/node-pg-types",
   "devDependencies": {
+    "if-node-version": "^1.1.1",
     "pff": "^1.0.0",
     "tap-spec": "^4.0.0",
     "tape": "^4.0.0",
