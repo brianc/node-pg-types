@@ -289,7 +289,7 @@ exports['array/numeric'] = {
   id: 1231,
   tests: [
     ['{1.2,3.4}', function (t, value) {
-      t.deepEqual(value, [1.2, 3.4])
+      t.deepEqual(value, ['1.2', '3.4'])
     }]
   ]
 }
@@ -531,7 +531,7 @@ exports['binary-numeric'] = {
   tests: [
     [
       [0, 2, 0, 0, 0, 0, 0, hex('0x64'), 0, 12, hex('0xd'), hex('0x48'), 0, 0, 0, 0],
-      12.34
+      '12.34'
     ]
   ]
 }
