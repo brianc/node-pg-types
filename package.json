@@ -4,8 +4,8 @@
   "description": "Query result type converters for node-postgres",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | tap-spec && npm run test-ts",
-    "test-ts": "if-node-version '>= 8' tsd"
+    "test": "make test-all",
+    "test-ts": "make test-ts"
   },
   "repository": {
     "type": "git",
