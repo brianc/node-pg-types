@@ -1,6 +1,5 @@
 
 var test = require('tape')
-var printf = require('pff')
 var getTypeParser = require('../').getTypeParser
 var types = require('./types')
 
