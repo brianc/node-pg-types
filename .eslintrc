@@ -1,0 +1,32 @@
+{
+  "plugins": [
+    "node"
+  ],
+  "extends": [
+    "standard",
+    "eslint:recommended",
+    "plugin:node/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "brace-style": 0,
+    "comma-style": 0,
+    "eqeqeq": 0,
+    "indent": 0,
+    "keyword-spacing": 0,
+    "no-unused-vars": 0,
+    "quotes": 0,
+    "semi": 0,
+    "space-before-blocks": 0,
+    "space-before-function-paren": 0,
+    "spaced-comment": 0,
+    "space-in-parens": 0,
+    "standard/no-callback-literal": 0
+  }
+}

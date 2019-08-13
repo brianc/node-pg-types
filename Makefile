@@ -1,12 +1,15 @@
 .PHONY: publish-patch test
 
+lint:
+	node_modules/.bin/if-node-version '>= 8' node_modules/.bin/eslint lib
+
 test:
 	node_modules/.bin/tape test/*.js | node_modules/.bin/tap-spec && npm run test-ts
 
 test-ts:
 	node_modules/.bin/if-node-version '>= 8' node_modules/.bin/tsd
 
-test-all: test test-ts
+test-all: test test-ts lint
 
 patch: test
 	npm version patch -m "Bump version"
