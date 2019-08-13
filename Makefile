@@ -3,6 +3,9 @@
 test:
 	npm test
 
+lint:
+	npm run lint
+
 patch: test
 	npm version patch -m "Bump version"
 	git push origin master --tags
