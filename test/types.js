@@ -289,7 +289,7 @@ exports['array/numeric'] = {
   id: 1231,
   tests: [
     ['{1.2,3.4}', function (t, value) {
-      t.deepEqual(value, [1.2, 3.4])
+      t.deepEqual(value, ['1.2', '3.4'])
     }]
   ]
 }
