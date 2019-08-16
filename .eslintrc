@@ -15,6 +15,6 @@
     "es6": true
   },
   "rules": {
-    "semi": 0
+    "semi": ["error", "always"]
   }
 }
