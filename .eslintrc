@@ -15,7 +15,6 @@
     "es6": true
   },
   "rules": {
-    "brace-style": 0,
     "comma-style": 0,
     "eqeqeq": 0,
     "indent": 0,
