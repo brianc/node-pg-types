@@ -15,7 +15,6 @@
     "es6": true
   },
   "rules": {
-    "semi": 0,
-    "standard/no-callback-literal": 0
+    "semi": 0
   }
 }
