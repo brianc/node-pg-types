@@ -15,7 +15,6 @@
     "es6": true
   },
   "rules": {
-    "quotes": 0,
     "semi": 0,
     "space-before-blocks": 0,
     "space-before-function-paren": 0,
