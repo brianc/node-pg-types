@@ -37,6 +37,11 @@
     "postgres-date": "~1.0.4",
     "postgres-interval": "^1.1.0"
   },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib"
+  ],
   "engines": {
     "node": ">=4"
   }
