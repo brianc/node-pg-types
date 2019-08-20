@@ -1,10 +1,13 @@
-.PHONY: publish-patch test
+.PHONY: coverage minor patch test
 
 test:
 	npm test
 
 lint:
 	npm run lint
+
+coverage:
+	npm run coverage
 
 patch: test
 	npm version patch -m "Bump version"
