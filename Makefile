@@ -1,4 +1,4 @@
-.PHONY: publish-patch test
+.PHONY: minor patch test
 
 test:
 	npm test
