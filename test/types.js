@@ -599,7 +599,20 @@ exports['binary-array/int8'] = {
         0, 0, 0, 8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
       ]),
       function (t, value) {
-        t.deepEqual(value, [-1])
+        t.deepEqual(value, ['-1'])
+      }
+    ],
+    [
+      new Buffer([
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+        0, 0, 0, 0x14,  // int8[]
+        0, 0, 0, 1,
+        0, 0, 0, 1,
+        0, 0, 0, 8, 0x01, 0xb6, 0x9b, 0x4b, 0xac, 0xd0, 0x5f, 0x15,
+      ]),
+      function (t, value) {
+        t.deepEqual(value, ['123456789123456789'])
       }
     ]
   ]
