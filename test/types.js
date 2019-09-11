@@ -565,6 +565,46 @@ exports['binary-string'] = {
   ]
 }
 
+exports['binary-array/int4'] = {
+  format: 'binary',
+  id: 1007,
+  tests: [
+    [
+      new Buffer([
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+        0, 0, 0, 0x17,  // int4[]
+        0, 0, 0, 1,
+        0, 0, 0, 1,
+        0, 0, 0, 4, 0xff, 0xff, 0xff, 0xff,
+      ]),
+      function (t, value) {
+        t.deepEqual(value, [-1])
+      }
+    ]
+  ]
+}
+
+exports['binary-array/int8'] = {
+  format: 'binary',
+  id: 1016,
+  tests: [
+    [
+      new Buffer([
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+        0, 0, 0, 0x14,  // int8[]
+        0, 0, 0, 1,
+        0, 0, 0, 1,
+        0, 0, 0, 8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+      ]),
+      function (t, value) {
+        t.deepEqual(value, [-1])
+      }
+    ]
+  ]
+}
+
 exports.point = {
   format: 'text',
   id: 600,
