@@ -33,15 +33,21 @@ test('types', function (t) {
 
     var expected = 'a'.repeat(1000000)
 
-    var input = Buffer.from(
+    var input = Buffer.alloc(20 + 300 * (4 + expected.length))
+    input.write(
       '\x00\x00\x00\x01' +  // 1 dimension
       '\x00\x00\x00\x00' +  // no nulls
       '\x00\x00\x00\x19' +  // text[]
       '\x00\x00\x01\x2c' +  // 300 elements
-      '\x00\x00\x00\x01' +  // lower bound 1
-      ('\x00\x0f\x42\x40' + expected).repeat(300),
+      '\x00\x00\x00\x01',   // lower bound 1
+      0,
       'binary'
     )
+
+    for (var offset = 20; offset < input.length; offset += 4 + expected.length) {
+      input.write('\x00\x0f\x42\x40', offset, 'binary')
+      input.write(expected, offset + 4, 'utf8')
+    }
 
     var result = parser(input)
 
