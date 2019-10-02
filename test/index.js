@@ -27,4 +27,41 @@ test('types', function (t) {
       t.end()
     })
   })
+
+  t.test('binary array bits overflow', function (t) {
+    var parser = getTypeParser(1009, 'binary')
+
+    var expected = 'a'.repeat(1000000)
+
+    var input = Buffer.alloc(20 + 300 * (4 + expected.length))
+    input.write(
+      '\x00\x00\x00\x01' +  // 1 dimension
+      '\x00\x00\x00\x00' +  // no nulls
+      '\x00\x00\x00\x19' +  // text[]
+      '\x00\x00\x01\x2c' +  // 300 elements
+      '\x00\x00\x00\x01',   // lower bound 1
+      0,
+      'binary'
+    )
+
+    for (var offset = 20; offset < input.length; offset += 4 + expected.length) {
+      input.write('\x00\x0f\x42\x40', offset, 'binary')
+      input.write(expected, offset + 4, 'utf8')
+    }
+
+    var result = parser(input)
+
+    t.equal(result.length, 300)
+
+    var correct = 0
+
+    result.forEach(function (element) {
+      if (element === expected) {
+        correct++
+      }
+    })
+
+    t.equal(correct, 300)
+    t.end()
+  })
 })
