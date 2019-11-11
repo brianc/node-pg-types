@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "pg-int8": "1.0.1",
-    "pg-numeric": "1.0.1",
+    "pg-numeric": "1.0.2",
     "postgres-array": "~2.0.0",
     "postgres-bytea": "~1.0.0",
     "postgres-date": "~1.0.4",
