@@ -76,12 +76,3 @@ export function setTypeParser<T>(oid: number | TypeId, format: 'binary', parseFn
 export function getTypeParser<T>(oid: number | TypeId): TypeParser<string, T | string>;
 export function getTypeParser<T>(oid: number | TypeId, format: 'text'): TypeParser<string, T | string>;
 export function getTypeParser<T>(oid: number | TypeId, format: 'binary'): TypeParser<Buffer, T | string>;
-
-interface ArrayParser<T> {
-  parse(): ReadonlyArray<T>;
-}
-
-export namespace arrayParser {
-  function create<T>(source: string): ArrayParser<string>;
-  function create<T>(source: string, transform: TypeParser<string, T>): ArrayParser<T>;
-}
