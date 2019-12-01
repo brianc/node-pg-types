@@ -20,10 +20,6 @@ expectType<boolean | string>(booleanParser2('f'));
 const numericParser = types.getTypeParser<number>(types.builtins.NUMERIC, 'binary');
 expectType<number | string>(numericParser(Buffer.from([200, 1, 0, 15])));
 
-// arrayParser
-const value = types.arrayParser.create('{1,2,3}', (num: string): number => Number.parseInt(num)).parse();
-expectType<ReadonlyArray<number>>(value);
-
 // setTypeParser
 types.setTypeParser(types.builtins.INT8, Number.parseInt);
 types.setTypeParser(types.builtins.FLOAT8, Number.parseFloat);
