@@ -113,11 +113,11 @@ exports.timestamp = {
       function (t, value) {
         t.equal(
           value.toUTCString(),
-          new Date(2010, 9, 31, 0, 0, 0, 0, 0).toUTCString()
+          new Date(2010, 9, 31, 0, 0, 0, 0).toUTCString()
         )
         t.equal(
           value.toString(),
-          new Date(2010, 9, 31, 0, 0, 0, 0, 0, 0).toString()
+          new Date(2010, 9, 31, 0, 0, 0, 0).toString()
         )
       }
     ]
