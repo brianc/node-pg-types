@@ -113,11 +113,11 @@ exports.timestamp = {
       function (t, value) {
         t.equal(
           value.toUTCString(),
-          new Date(2010, 9, 31, 0, 0, 0, 0, 0).toUTCString()
+          new Date(2010, 9, 31, 0, 0, 0, 0).toUTCString()
         )
         t.equal(
           value.toString(),
-          new Date(2010, 9, 31, 0, 0, 0, 0, 0, 0).toString()
+          new Date(2010, 9, 31, 0, 0, 0, 0).toString()
         )
       }
     ]
@@ -530,7 +530,7 @@ exports['binary-numeric'] = {
   id: 1700,
   tests: [
     [
-      [0, 2, 0, 0, 0, 0, 0, hex('0x64'), 0, 12, hex('0xd'), hex('0x48')],
+      [0, 2, 0, 0, 0, 0, 0, 0x64, 0, 12, 0xd, 0x48],
       '12.3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
     ]
   ]
@@ -540,7 +540,7 @@ exports['binary-real/float4'] = {
   format: 'binary',
   id: 700,
   tests: [
-    [['0x41', '0x48', '0x00', '0x00'].map(hex), 12.5]
+    [[0x41, 0x48, 0x00, 0x00], 12.5]
   ]
 }
 
@@ -559,7 +559,7 @@ exports['binary-string'] = {
   id: 25,
   tests: [
     [
-      new Buffer(['0x73', '0x6c', '0x61', '0x64', '0x64', '0x61'].map(hex)),
+      new Buffer([0x73, 0x6c, 0x61, 0x64, 0x64, 0x61]),
       'sladda'
     ]
   ]
@@ -636,10 +636,6 @@ exports.circle = {
       t.deepEqual(value, {x: 25, y: 10, radius: 5})
     }]
   ]
-}
-
-function hex (string) {
-  return parseInt(string, 16)
 }
 
 function dateEquals () {
