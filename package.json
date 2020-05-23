@@ -6,9 +6,9 @@
   "scripts": {
     "coverage": "nyc --reporter=html npm test && open-cli coverage/index.html",
     "coverage-ci": "nyc --reporter=lcov npm test && codecov",
-    "lint": "if-node-version '>= 8' standard 'lib/**'",
+    "lint": "standard 'lib/**'",
     "test": "tape test/*.js | tap-spec && npm run test-ts && npm run lint",
-    "test-ts": "if-node-version '>= 8' tsd"
+    "test-ts": "tsd"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,6 @@
   "homepage": "https://github.com/brianc/node-pg-types",
   "devDependencies": {
     "codecov": "^3.5.0",
-    "if-node-version": "^1.1.1",
     "nyc": "^14.1.1",
     "open-cli": "^5.0.0",
     "standard": "^14.3.1",
