@@ -91,7 +91,7 @@ exports.timestamptz = {
     ],
     [
       '2011-01-23 22:05:00.68-06',
-       dateEquals(2011, 0, 24, 4, 5, 0, 680)
+      dateEquals(2011, 0, 24, 4, 5, 0, 680)
     ],
     [
       '2010-10-30 14:11:12.730838Z',
@@ -193,18 +193,18 @@ exports.interval = {
   tests: [
     ['01:02:03', function (t, value) {
       t.equal(value.toPostgres(), '3 seconds 2 minutes 1 hours')
-      t.deepEqual(value, {hours: 1, minutes: 2, seconds: 3})
+      t.deepEqual(value, { hours: 1, minutes: 2, seconds: 3 })
     }],
     ['01:02:03.456', function (t, value) {
-      t.deepEqual(value, {hours: 1, minutes:2, seconds: 3, milliseconds: 456})
+      t.deepEqual(value, { hours: 1, minutes: 2, seconds: 3, milliseconds: 456 })
     }],
     ['1 year -32 days', function (t, value) {
       t.equal(value.toPostgres(), '-32 days 1 years')
-      t.deepEqual(value, {years: 1, days: -32})
+      t.deepEqual(value, { years: 1, days: -32 })
     }],
     ['1 day -00:00:03', function (t, value) {
       t.equal(value.toPostgres(), '-3 seconds 1 days')
-      t.deepEqual(value, {days: 1, seconds: -3})
+      t.deepEqual(value, { days: 1, seconds: -3 })
     }]
   ]
 }
@@ -214,24 +214,24 @@ exports.bytea = {
   id: 17,
   tests: [
     ['foo\\000\\200\\\\\\377', function (t, value) {
-      var buffer = new Buffer([102, 111, 111, 0, 128, 92, 255])
+      var buffer = Buffer.from([102, 111, 111, 0, 128, 92, 255])
       t.ok(buffer.equals(value))
     }],
     ['', function (t, value) {
-      var buffer = new Buffer(0)
+      var buffer = Buffer.from([])
       t.ok(buffer.equals(value))
     }]
   ]
 }
 
 exports['array/boolean'] = {
-    format: 'text',
-    id: 1000,
-    tests: [
-        ['{true,false}', function (t, value) {
-            t.deepEqual(value, [true, false])
-        }]
-    ]
+  format: 'text',
+  id: 1000,
+  tests: [
+    ['{true,false}', function (t, value) {
+      t.deepEqual(value, [true, false])
+    }]
+  ]
 }
 
 exports['array/char'] = {
@@ -269,18 +269,18 @@ exports['array/bytea'] = {
   id: 1001,
   tests: [
     ['{"\\\\x00000000"}', function (t, value) {
-      var buffer = new Buffer('00000000', 'hex')
+      var buffer = Buffer.from('00000000', 'hex')
       t.ok(Array.isArray(value))
       t.equal(value.length, 1)
       t.ok(buffer.equals(value[0]))
     }],
     ['{NULL,"\\\\x4e554c4c"}', function (t, value) {
-      var buffer = new Buffer('4e554c4c', 'hex')
+      var buffer = Buffer.from('4e554c4c', 'hex')
       t.ok(Array.isArray(value))
       t.equal(value.length, 2)
       t.equal(value[0], null)
       t.ok(buffer.equals(value[1]))
-    }],
+    }]
   ]
 }
 
@@ -342,7 +342,7 @@ exports['array/json'] = {
         t.deepEqual(value, [
           [1, 2],
           [[3], [4, 5]],
-          [null, null],
+          [null, null]
         ])
       }
     ]
@@ -360,7 +360,7 @@ exports['array/point'] = {
   id: 1017,
   tests: [
     ['{"(25.1,50.5)","(10.1,40)"}', function (t, value) {
-      t.deepEqual(value, [{x: 25.1, y: 50.5}, {x: 10.1, y: 40}])
+      t.deepEqual(value, [{ x: 25.1, y: 50.5 }, { x: 10.1, y: 40 }])
     }]
   ]
 }
@@ -419,10 +419,10 @@ exports['array/interval'] = {
   id: 1187,
   tests: [
     ['{01:02:03,1 day -00:00:03}', function (t, value) {
-      var expecteds = [{hours: 1, minutes: 2, seconds: 3},
-                       {days: 1, seconds: -3}]
+      var expecteds = [{ hours: 1, minutes: 2, seconds: 3 },
+        { days: 1, seconds: -3 }]
       t.equal(value.length, 2)
-      t.deepEqual(value, expecteds);
+      t.deepEqual(value, expecteds)
     }]
   ]
 }
@@ -432,13 +432,13 @@ exports['array/inet'] = {
   id: 1041,
   tests: [
     ['{8.8.8.8}', function (t, value) {
-      t.deepEqual(value, ['8.8.8.8']);
+      t.deepEqual(value, ['8.8.8.8'])
     }],
     ['{2001:4860:4860::8888}', function (t, value) {
-      t.deepEqual(value, ['2001:4860:4860::8888']);
+      t.deepEqual(value, ['2001:4860:4860::8888'])
     }],
     ['{127.0.0.1,fd00:1::40e,1.2.3.4}', function (t, value) {
-      t.deepEqual(value, ['127.0.0.1', 'fd00:1::40e', '1.2.3.4']);
+      t.deepEqual(value, ['127.0.0.1', 'fd00:1::40e', '1.2.3.4'])
     }]
   ]
 }
@@ -448,13 +448,13 @@ exports['array/cidr'] = {
   id: 651,
   tests: [
     ['{172.16.0.0/12}', function (t, value) {
-      t.deepEqual(value, ['172.16.0.0/12']);
+      t.deepEqual(value, ['172.16.0.0/12'])
     }],
     ['{fe80::/10}', function (t, value) {
-      t.deepEqual(value, ['fe80::/10']);
+      t.deepEqual(value, ['fe80::/10'])
     }],
     ['{10.0.0.0/8,fc00::/7,192.168.0.0/24}', function (t, value) {
-      t.deepEqual(value, ['10.0.0.0/8', 'fc00::/7', '192.168.0.0/24']);
+      t.deepEqual(value, ['10.0.0.0/8', 'fc00::/7', '192.168.0.0/24'])
     }]
   ]
 }
@@ -464,7 +464,7 @@ exports['array/macaddr'] = {
   id: 1040,
   tests: [
     ['{08:00:2b:01:02:03,16:10:9f:0d:66:00}', function (t, value) {
-      t.deepEqual(value, ['08:00:2b:01:02:03', '16:10:9f:0d:66:00']);
+      t.deepEqual(value, ['08:00:2b:01:02:03', '16:10:9f:0d:66:00'])
     }]
   ]
 }
@@ -474,13 +474,13 @@ exports['array/numrange'] = {
   id: 3907,
   tests: [
     ['{"[1,2]","(4.5,8)","[10,40)","(-21.2,60.3]"}', function (t, value) {
-      t.deepEqual(value, ['[1,2]', '(4.5,8)', '[10,40)', '(-21.2,60.3]']);
+      t.deepEqual(value, ['[1,2]', '(4.5,8)', '[10,40)', '(-21.2,60.3]'])
     }],
     ['{"[,20]","[3,]","[,]","(,35)","(1,)","(,)"}', function (t, value) {
-      t.deepEqual(value, ['[,20]', '[3,]', '[,]', '(,35)', '(1,)', '(,)']);
+      t.deepEqual(value, ['[,20]', '[3,]', '[,]', '(,35)', '(1,)', '(,)'])
     }],
     ['{"[,20)","[3,)","[,)","[,35)","[1,)","[,)"}', function (t, value) {
-      t.deepEqual(value, ['[,20)', '[3,)', '[,)', '[,35)', '[1,)', '[,)']);
+      t.deepEqual(value, ['[,20)', '[3,)', '[,)', '[,35)', '[1,)', '[,)'])
     }]
   ]
 }
@@ -513,7 +513,7 @@ exports['binary-bigint/int8'] = {
   format: 'binary',
   id: 20,
   tests: [
-    [new Buffer([0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]), '9223372036854775807']
+    [Buffer.from([0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]), '9223372036854775807']
   ]
 }
 
@@ -559,7 +559,7 @@ exports['binary-string'] = {
   id: 25,
   tests: [
     [
-      new Buffer([0x73, 0x6c, 0x61, 0x64, 0x64, 0x61]),
+      Buffer.from([0x73, 0x6c, 0x61, 0x64, 0x64, 0x61]),
       'sladda'
     ]
   ]
@@ -570,13 +570,13 @@ exports['binary-array/int4'] = {
   id: 1007,
   tests: [
     [
-      new Buffer([
+      Buffer.from([
         0, 0, 0, 1,
         0, 0, 0, 0,
-        0, 0, 0, 0x17,  // int4[]
+        0, 0, 0, 0x17, // int4[]
         0, 0, 0, 1,
         0, 0, 0, 1,
-        0, 0, 0, 4, 0xff, 0xff, 0xff, 0xff,
+        0, 0, 0, 4, 0xff, 0xff, 0xff, 0xff
       ]),
       function (t, value) {
         t.deepEqual(value, [-1])
@@ -590,26 +590,26 @@ exports['binary-array/int8'] = {
   id: 1016,
   tests: [
     [
-      new Buffer([
+      Buffer.from([
         0, 0, 0, 1,
         0, 0, 0, 0,
-        0, 0, 0, 0x14,  // int8[]
+        0, 0, 0, 0x14, // int8[]
         0, 0, 0, 1,
         0, 0, 0, 1,
-        0, 0, 0, 8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+        0, 0, 0, 8, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
       ]),
       function (t, value) {
         t.deepEqual(value, ['-1'])
       }
     ],
     [
-      new Buffer([
+      Buffer.from([
         0, 0, 0, 1,
         0, 0, 0, 0,
-        0, 0, 0, 0x14,  // int8[]
+        0, 0, 0, 0x14, // int8[]
         0, 0, 0, 1,
         0, 0, 0, 1,
-        0, 0, 0, 8, 0x01, 0xb6, 0x9b, 0x4b, 0xac, 0xd0, 0x5f, 0x15,
+        0, 0, 0, 8, 0x01, 0xb6, 0x9b, 0x4b, 0xac, 0xd0, 0x5f, 0x15
       ]),
       function (t, value) {
         t.deepEqual(value, ['123456789123456789'])
@@ -623,7 +623,7 @@ exports.point = {
   id: 600,
   tests: [
     ['(25.1,50.5)', function (t, value) {
-      t.deepEqual(value, {x: 25.1, y: 50.5})
+      t.deepEqual(value, { x: 25.1, y: 50.5 })
     }]
   ]
 }
@@ -633,7 +633,7 @@ exports.circle = {
   id: 718,
   tests: [
     ['<(25,10),5>', function (t, value) {
-      t.deepEqual(value, {x: 25, y: 10, radius: 5})
+      t.deepEqual(value, { x: 25, y: 10, radius: 5 })
     }]
   ]
 }

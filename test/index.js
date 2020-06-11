@@ -11,7 +11,7 @@ test('types', function (t) {
       type.tests.forEach(function (tests) {
         var input = tests[0]
         if (type.format === 'binary' && input !== null && !Buffer.isBuffer(input)) {
-          if (Array.isArray(input) || typeof(input) === 'string') {
+          if (Array.isArray(input) || typeof (input) === 'string') {
             input = Buffer.from(input)
           } else {
             throw new Error('Binary test inputs must be null, a String, a Buffer, or an Array')
@@ -35,11 +35,11 @@ test('types', function (t) {
 
     var input = Buffer.alloc(20 + 300 * (4 + expected.length))
     input.write(
-      '\x00\x00\x00\x01' +  // 1 dimension
-      '\x00\x00\x00\x00' +  // no nulls
-      '\x00\x00\x00\x19' +  // text[]
-      '\x00\x00\x01\x2c' +  // 300 elements
-      '\x00\x00\x00\x01',   // lower bound 1
+      '\x00\x00\x00\x01' + // 1 dimension
+      '\x00\x00\x00\x00' + // no nulls
+      '\x00\x00\x00\x19' + // text[]
+      '\x00\x00\x01\x2c' + // 300 elements
+      '\x00\x00\x00\x01', // lower bound 1
       0,
       'binary'
     )

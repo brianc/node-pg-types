@@ -6,7 +6,7 @@
   "scripts": {
     "coverage": "nyc --reporter=html npm test && open-cli coverage/index.html",
     "coverage-ci": "nyc --reporter=lcov npm test && codecov",
-    "lint": "standard 'lib/**'",
+    "lint": "standard",
     "test": "tape test/*.js | tap-spec && npm run test-ts && npm run lint",
     "test-ts": "tsd"
   },
