@@ -137,12 +137,8 @@ exports.date = {
   format: 'text',
   id: 1082,
   tests: [
-    ['2010-10-31', function (t, value) {
-      t.equal(value, '2010-10-31')
-    }],
-    ['2010-10-31 BC', function (t, value) {
-      t.equal(value, '2010-10-31 BC')
-    }]
+    ['2010-10-31', '2010-10-31'],
+    ['2010-10-31 BC', '2010-10-31 BC']
   ]
 }
 

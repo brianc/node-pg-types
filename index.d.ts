@@ -1,4 +1,4 @@
-export enum TypeId {
+export enum builtins {
   BOOL = 16,
   BYTEA = 17,
   CHAR = 18,
@@ -61,13 +61,10 @@ export enum TypeId {
   REGROLE = 4096
 }
 
-export type TypesBuiltins = {
-  readonly [key in keyof typeof TypeId]: TypeId;
-};
+export type TypeId = builtins;
+export type TypesBuiltins = typeof builtins;
 
 export type TypeParser<I extends (string | Buffer), T> = (value: I) => T;
-
-export const builtins: TypesBuiltins;
 
 export function setTypeParser<T>(oid: number | TypeId, parseFn: TypeParser<string, T>): void;
 export function setTypeParser<T>(oid: number | TypeId, format: 'text', parseFn: TypeParser<string, T>): void;
