@@ -100,6 +100,10 @@ exports.timestamptz = {
     [
       '2010-10-30 13:10:01+05',
       dateEquals(2010, 9, 30, 8, 10, 1, 0)
+    ],
+    [
+      '1000-01-01 00:00:00+00 BC',
+      dateEquals(-999, 0, 1, 0, 0, 0, 0)
     ]
   ]
 }
@@ -112,12 +116,17 @@ exports.timestamp = {
       '2010-10-31 00:00:00',
       function (t, value) {
         t.equal(
-          value.toUTCString(),
-          new Date(2010, 9, 31, 0, 0, 0, 0).toUTCString()
+          value.toISOString(),
+          '2010-10-31T00:00:00.000Z'
         )
+      }
+    ],
+    [
+      '1000-01-01 00:00:00 BC',
+      function (t, value) {
         t.equal(
-          value.toString(),
-          new Date(2010, 9, 31, 0, 0, 0, 0).toString()
+          value.toISOString(),
+          '-000999-01-01T00:00:00.000Z'
         )
       }
     ]
@@ -128,7 +137,8 @@ exports.date = {
   format: 'text',
   id: 1082,
   tests: [
-    ['2010-10-31', '2010-10-31']
+    ['2010-10-31', '2010-10-31'],
+    ['2010-10-31 BC', '2010-10-31 BC']
   ]
 }
 
