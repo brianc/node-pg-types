@@ -76,8 +76,7 @@ exports.boolean = {
     ['yes', true],
     ['on', true],
     ['1', true],
-    ['f', false],
-    [null, null]
+    ['f', false]
   ]
 }
 
@@ -542,8 +541,7 @@ exports['binary-boolean'] = {
   id: 16,
   tests: [
     [[1], true],
-    [[0], false],
-    [null, null]
+    [[0], false]
   ]
 }
 
