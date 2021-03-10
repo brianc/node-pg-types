@@ -26,21 +26,22 @@
   },
   "homepage": "https://github.com/brianc/node-pg-types",
   "devDependencies": {
-    "codecov": "^3.5.0",
-    "nyc": "^14.1.1",
-    "open-cli": "^5.0.0",
-    "standard": "^14.3.1",
+    "@types/node": "^14.14.33",
+    "codecov": "^3.8.1",
+    "nyc": "^15.1.0",
+    "open-cli": "^6.0.1",
+    "standard": "^16.0.3",
     "tap-spec": "^5.0.0",
-    "tape": "^4.0.0",
-    "tsd": "^0.9.0"
+    "tape": "^5.2.2",
+    "tsd": "^0.14.0"
   },
   "dependencies": {
     "pg-int8": "1.0.1",
     "pg-numeric": "1.0.2",
-    "postgres-array": "~2.0.0",
+    "postgres-array": "~3.0.1",
     "postgres-bytea": "~3.0.0",
-    "postgres-date": "~1.0.4",
-    "postgres-interval": "^1.1.0"
+    "postgres-date": "~2.0.1",
+    "postgres-interval": "^3.0.0"
   },
   "files": [
     "index.js",

@@ -1,4 +1,5 @@
 'use strict'
+const PostgresInterval = require('postgres-interval')
 
 exports['string/varchar'] = {
   format: 'text',
@@ -40,7 +41,7 @@ exports.oid = {
   ]
 }
 
-var bignum = '31415926535897932384626433832795028841971693993751058.16180339887498948482045868343656381177203091798057628'
+const bignum = '31415926535897932384626433832795028841971693993751058.16180339887498948482045868343656381177203091798057628'
 exports.numeric = {
   format: 'text',
   id: 1700,
@@ -188,24 +189,28 @@ exports.numrange = {
   ]
 }
 
+function toPostgresInterval (obj) {
+  const base = Object.create(PostgresInterval.prototype)
+  return Object.assign(base, obj)
+}
 exports.interval = {
   format: 'text',
   id: 1186,
   tests: [
     ['01:02:03', function (t, value) {
       t.equal(value.toPostgres(), '3 seconds 2 minutes 1 hours')
-      t.deepEqual(value, { hours: 1, minutes: 2, seconds: 3 })
+      t.deepEqual(value, toPostgresInterval({ years: 0, months: 0, days: 0, hours: 1, minutes: 2, seconds: 3, milliseconds: 0 }))
     }],
     ['01:02:03.456', function (t, value) {
-      t.deepEqual(value, { hours: 1, minutes: 2, seconds: 3, milliseconds: 456 })
+      t.deepEqual(value, toPostgresInterval({ years: 0, months: 0, days: 0, hours: 1, minutes: 2, seconds: 3, milliseconds: 456 }))
     }],
     ['1 year -32 days', function (t, value) {
       t.equal(value.toPostgres(), '-32 days 1 years')
-      t.deepEqual(value, { years: 1, days: -32 })
+      t.deepEqual(value, toPostgresInterval({ years: 1, months: 0, days: -32, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }))
     }],
     ['1 day -00:00:03', function (t, value) {
       t.equal(value.toPostgres(), '-3 seconds 1 days')
-      t.deepEqual(value, { days: 1, seconds: -3 })
+      t.deepEqual(value, toPostgresInterval({ years: 0, months: 0, days: 1, hours: -0, minutes: -0, seconds: -3, milliseconds: -0 }))
     }]
   ]
 }
@@ -215,11 +220,11 @@ exports.bytea = {
   id: 17,
   tests: [
     ['foo\\000\\200\\\\\\377', function (t, value) {
-      var buffer = Buffer.from([102, 111, 111, 0, 128, 92, 255])
+      const buffer = Buffer.from([102, 111, 111, 0, 128, 92, 255])
       t.ok(buffer.equals(value))
     }],
     ['', function (t, value) {
-      var buffer = Buffer.from([])
+      const buffer = Buffer.from([])
       t.ok(buffer.equals(value))
     }]
   ]
@@ -270,13 +275,13 @@ exports['array/bytea'] = {
   id: 1001,
   tests: [
     ['{"\\\\x00000000"}', function (t, value) {
-      var buffer = Buffer.from('00000000', 'hex')
+      const buffer = Buffer.from('00000000', 'hex')
       t.ok(Array.isArray(value))
       t.equal(value.length, 1)
       t.ok(buffer.equals(value[0]))
     }],
     ['{NULL,"\\\\x4e554c4c"}', function (t, value) {
-      var buffer = Buffer.from('4e554c4c', 'hex')
+      const buffer = Buffer.from('4e554c4c', 'hex')
       t.ok(Array.isArray(value))
       t.equal(value.length, 2)
       t.equal(value[0], null)
@@ -411,8 +416,8 @@ exports['array/interval'] = {
   id: 1187,
   tests: [
     ['{01:02:03,1 day -00:00:03}', function (t, value) {
-      var expecteds = [{ hours: 1, minutes: 2, seconds: 3 },
-        { days: 1, seconds: -3 }]
+      const expecteds = [toPostgresInterval({ years: 0, months: 0, days: 0, hours: 1, minutes: 2, seconds: 3, milliseconds: 0 }),
+        toPostgresInterval({ years: 0, months: 0, days: 1, hours: -0, minutes: -0, seconds: -3, milliseconds: -0 })]
       t.equal(value.length, 2)
       t.deepEqual(value, expecteds)
     }]
@@ -630,7 +635,7 @@ exports.circle = {
 }
 
 function dateEquals () {
-  var timestamp = Date.UTC.apply(Date, arguments)
+  const timestamp = Date.UTC.apply(Date, arguments)
   return function (t, value) {
     t.equal(value.toUTCString(), new Date(timestamp).toUTCString())
   }
