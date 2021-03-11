@@ -41,7 +41,8 @@
     "postgres-array": "~3.0.1",
     "postgres-bytea": "~3.0.0",
     "postgres-date": "~2.0.1",
-    "postgres-interval": "^3.0.0"
+    "postgres-interval": "^3.0.0",
+    "postgres-range": "^1.0.0"
   },
   "files": [
     "index.js",
