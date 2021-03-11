@@ -1,15 +1,15 @@
 
-var test = require('tape')
-var getTypeParser = require('../').getTypeParser
-var types = require('./types')
+const test = require('tape')
+const getTypeParser = require('../').getTypeParser
+const types = require('./types')
 
 test('types', function (t) {
   Object.keys(types).forEach(function (typeName) {
-    var type = types[typeName]
+    const type = types[typeName]
     t.test(typeName, function (t) {
-      var parser = getTypeParser(type.id, type.format)
+      const parser = getTypeParser(type.id, type.format)
       type.tests.forEach(function (tests) {
-        var input = tests[0]
+        let input = tests[0]
         if (type.format === 'binary' && input !== null && !Buffer.isBuffer(input)) {
           if (Array.isArray(input) || typeof (input) === 'string') {
             input = Buffer.from(input)
@@ -17,8 +17,8 @@ test('types', function (t) {
             throw new Error('Binary test inputs must be null, a String, a Buffer, or an Array')
           }
         }
-        var expected = tests[1]
-        var result = parser(input)
+        const expected = tests[1]
+        const result = parser(input)
         if (typeof expected === 'function') {
           return expected(t, result)
         }
@@ -29,11 +29,11 @@ test('types', function (t) {
   })
 
   t.test('binary array bits overflow', function (t) {
-    var parser = getTypeParser(1009, 'binary')
+    const parser = getTypeParser(1009, 'binary')
 
-    var expected = 'a'.repeat(1000000)
+    const expected = 'a'.repeat(1000000)
 
-    var input = Buffer.alloc(20 + 300 * (4 + expected.length))
+    const input = Buffer.alloc(20 + 300 * (4 + expected.length))
     input.write(
       '\x00\x00\x00\x01' + // 1 dimension
       '\x00\x00\x00\x00' + // no nulls
@@ -44,16 +44,16 @@ test('types', function (t) {
       'binary'
     )
 
-    for (var offset = 20; offset < input.length; offset += 4 + expected.length) {
+    for (let offset = 20; offset < input.length; offset += 4 + expected.length) {
       input.write('\x00\x0f\x42\x40', offset, 'binary')
       input.write(expected, offset + 4, 'utf8')
     }
 
-    var result = parser(input)
+    const result = parser(input)
 
     t.equal(result.length, 300)
 
-    var correct = 0
+    let correct = 0
 
     result.forEach(function (element) {
       if (element === expected) {
