@@ -1,6 +1,15 @@
 'use strict'
 const PostgresInterval = require('postgres-interval')
 
+const {
+  Range,
+  RANGE_EMPTY,
+  RANGE_LB_INC,
+  RANGE_LB_INF,
+  RANGE_UB_INF,
+  RANGE_UB_INC
+} = require('postgres-range')
+
 exports['string/varchar'] = {
   format: 'text',
   id: 1043,
@@ -179,13 +188,157 @@ exports.numrange = {
   format: 'text',
   id: 3906,
   tests: [
-    ['[,]', '[,]'],
-    ['(,)', '(,)'],
-    ['(,]', '(,]'],
-    ['[1,)', '[1,)'],
-    ['[,1]', '[,1]'],
-    ['(1,2)', '(1,2)'],
-    ['(1,20.5]', '(1,20.5]']
+    ['empty', function (t, value) {
+      t.deepEqual(value, new Range(null, null, RANGE_EMPTY))
+    }],
+    ['(,)', function (t, value) {
+      t.deepEqual(value, new Range(null, null, RANGE_LB_INF | RANGE_UB_INF))
+    }],
+    ['(1.5,)', function (t, value) {
+      t.deepEqual(value, new Range(1.5, null, RANGE_UB_INF))
+    }],
+    ['(,1.5)', function (t, value) {
+      t.deepEqual(value, new Range(null, 1.5, RANGE_LB_INF))
+    }],
+    ['(0,5)', function (t, value) {
+      t.deepEqual(value, new Range(0, 5, 0))
+    }],
+    ['(,1.5]', function (t, value) {
+      t.deepEqual(value, new Range(null, 1.5, RANGE_LB_INF | RANGE_UB_INC))
+    }],
+    ['[1.5,)', function (t, value) {
+      t.deepEqual(value, new Range(1.5, null, RANGE_LB_INC | RANGE_UB_INF))
+    }],
+    ['[0,0.5)', function (t, value) {
+      t.deepEqual(value, new Range(0, 0.5, RANGE_LB_INC))
+    }],
+    ['(0,0.5]', function (t, value) {
+      t.deepEqual(value, new Range(0, 0.5, RANGE_UB_INC))
+    }],
+    ['[0,0.5]', function (t, value) {
+      t.deepEqual(value, new Range(0, 0.5, RANGE_LB_INC | RANGE_UB_INC))
+    }]
+  ]
+}
+
+exports.int4range = {
+  format: 'text',
+  id: 3904,
+  tests: [
+    ['empty', function (t, value) {
+      t.deepEqual(value, new Range(null, null, RANGE_EMPTY))
+    }],
+    ['(,)', function (t, value) {
+      t.deepEqual(value, new Range(null, null, RANGE_LB_INF | RANGE_UB_INF))
+    }],
+    ['(1,)', function (t, value) {
+      t.deepEqual(value, new Range(1, null, RANGE_UB_INF))
+    }],
+    ['(,1)', function (t, value) {
+      t.deepEqual(value, new Range(null, 1, RANGE_LB_INF))
+    }],
+    ['(0,5)', function (t, value) {
+      t.deepEqual(value, new Range(0, 5, 0))
+    }],
+    ['(,1]', function (t, value) {
+      t.deepEqual(value, new Range(null, 1, RANGE_LB_INF | RANGE_UB_INC))
+    }],
+    ['[1,)', function (t, value) {
+      t.deepEqual(value, new Range(1, null, RANGE_LB_INC | RANGE_UB_INF))
+    }],
+    ['[0,5)', function (t, value) {
+      t.deepEqual(value, new Range(0, 5, RANGE_LB_INC))
+    }],
+    ['(0,5]', function (t, value) {
+      t.deepEqual(value, new Range(0, 5, RANGE_UB_INC))
+    }],
+    ['[0,5]', function (t, value) {
+      t.deepEqual(value, new Range(0, 5, RANGE_LB_INC | RANGE_UB_INC))
+    }]
+  ]
+}
+
+exports.int8range = {
+  format: 'text',
+  id: 3926,
+  tests: [
+    ['empty', function (t, value) {
+      t.deepEqual(value, new Range(null, null, RANGE_EMPTY))
+    }],
+    ['(,)', function (t, value) {
+      t.deepEqual(value, new Range(null, null, RANGE_LB_INF | RANGE_UB_INF))
+    }],
+    ['(1,)', function (t, value) {
+      t.deepEqual(value, new Range('1', null, RANGE_UB_INF))
+    }],
+    ['(,1)', function (t, value) {
+      t.deepEqual(value, new Range(null, '1', RANGE_LB_INF))
+    }],
+    ['(0,5)', function (t, value) {
+      t.deepEqual(value, new Range('0', '5', 0))
+    }],
+    ['(,1]', function (t, value) {
+      t.deepEqual(value, new Range(null, '1', RANGE_LB_INF | RANGE_UB_INC))
+    }],
+    ['[1,)', function (t, value) {
+      t.deepEqual(value, new Range('1', null, RANGE_LB_INC | RANGE_UB_INF))
+    }],
+    ['[0,5)', function (t, value) {
+      t.deepEqual(value, new Range('0', '5', RANGE_LB_INC))
+    }],
+    ['(0,5]', function (t, value) {
+      t.deepEqual(value, new Range('0', '5', RANGE_UB_INC))
+    }],
+    ['[0,5]', function (t, value) {
+      t.deepEqual(value, new Range('0', '5', RANGE_LB_INC | RANGE_UB_INC))
+    }]
+  ]
+}
+
+const tsrangeEquals = ([lower, upper]) => {
+  const timestamp = date => new Date(Date.UTC.apply(Date, date)).toUTCString()
+  return (t, value) => {
+    if (lower !== null) {
+      t.equal(value.lower.toUTCString(), timestamp(lower))
+    }
+    if (upper !== null) {
+      t.equal(value.upper.toUTCString(), timestamp(upper))
+    }
+  }
+}
+exports.tstzrange = {
+  format: 'text',
+  id: 3910,
+  tests: [
+    ['(2010-10-31 14:54:13.74-05:30,)', tsrangeEquals([[2010, 9, 31, 20, 24, 13, 74], null])],
+    ['(,2010-10-31 14:54:13.74-05:30)', tsrangeEquals([null, [2010, 9, 31, 20, 24, 13, 74]])],
+    ['(2010-10-30 10:54:13.74-05:30,2010-10-31 14:54:13.74-05:30)', tsrangeEquals([[2010, 9, 30, 16, 24, 13, 74], [2010, 9, 31, 20, 24, 13, 74]])]
+  ]
+}
+exports.tsrange = {
+  format: 'text',
+  id: 3908,
+  tests: [
+    ['(2010-10-31 14:54:13.74,)', tsrangeEquals([[2010, 9, 31, 14, 54, 13, 74], null])],
+    ['(2010-10-31 14:54:13.74,infinity)', tsrangeEquals([[2010, 9, 31, 14, 54, 13, 74], null])],
+    ['(,2010-10-31 14:54:13.74)', tsrangeEquals([null, [2010, 9, 31, 14, 54, 13, 74]])],
+    ['(-infinity,2010-10-31 14:54:13.74)', tsrangeEquals([null, [2010, 9, 31, 14, 54, 13, 74]])],
+    ['(2010-10-30 10:54:13.74,2010-10-31 14:54:13.74)', tsrangeEquals([[2010, 9, 30, 10, 54, 13, 74], [2010, 9, 31, 14, 54, 13, 74]])]
+  ]
+}
+exports.daterange = {
+  format: 'text',
+  id: 3912,
+  tests: [
+    ['(2010-10-31,)', function (t, value) {
+      t.deepEqual(value, new Range('2010-10-31', null, RANGE_UB_INF))
+    }],
+    ['(,2010-10-31)', function (t, value) {
+      t.deepEqual(value, new Range(null, '2010-10-31', RANGE_LB_INF))
+    }],
+    ['[2010-10-30,2010-10-31]', function (t, value) {
+      t.deepEqual(value, new Range('2010-10-30', '2010-10-31', RANGE_LB_INC | RANGE_UB_INC))
+    }]
   ]
 }
 
