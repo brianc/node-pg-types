@@ -1,6 +1,6 @@
 
 const test = require('tape')
-const getTypeParser = require('../').getTypeParser
+const { getTypeParser, setTypeParser } = require('../')
 const types = require('./types')
 
 test('types', function (t) {
@@ -62,6 +62,16 @@ test('types', function (t) {
     })
 
     t.equal(correct, 300)
+    t.end()
+  })
+
+  t.test('setTypeParser should throw when oid is not an integer', function (t) {
+    t.throws(function () {
+      setTypeParser(null, function () {})
+    }, /^TypeError: oid must be an integer/)
+    t.throws(function () {
+      setTypeParser('a', function () {})
+    }, /^TypeError: oid must be an integer/)
     t.end()
   })
 })
