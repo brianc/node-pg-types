@@ -93,7 +93,7 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '10'
+          # - '10' dropped support due to error postgres-array@3.0.2: The engine "node" is incompatible with this module. Expected version ">=12". Got "10.24.1"
           - '12'
           - '14'
           - '16'
