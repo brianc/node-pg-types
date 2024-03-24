@@ -9,7 +9,7 @@ runs-on: ubuntu-latest
 
 jobs:
   lint:
-    timeout-minutes: 5
+    timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,7 +21,7 @@ jobs:
       - run: yarn install # --frozen-lockfile TODO get this option working
       - run: yarn lint
   test-js:
-    timeout-minutes: 10
+    timeout-minutes: 2
     needs: lint
     strategy:
       fail-fast: false
@@ -45,7 +45,7 @@ jobs:
       - run: yarn install # --frozen-lockfile TODO get this option working
       - run: yarn test
   test-ts:
-    timeout-minutes: 10
+    timeout-minutes: 2
     needs: lint
     strategy:
       fail-fast: false
