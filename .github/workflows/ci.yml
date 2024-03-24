@@ -23,17 +23,6 @@ jobs:
   test-js:
     timeout-minutes: 10
     needs: lint
-    services:
-      postgres:
-        image: postgres:11
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ci_db_test
-          POSTGRES_HOST_AUTH_METHOD: 'md5'
-        ports:
-          - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       fail-fast: false
       matrix:
@@ -48,15 +37,6 @@ jobs:
           - ubuntu-latest
     name: test js - node v${{ matrix.node }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    env:
-        PGUSER: postgres
-        PGHOST: localhost
-        PGPASSWORD: postgres
-        PGDATABASE: ci_db_test
-        PGTESTNOSSL: 'true'
-        SCRAM_TEST_PGUSER: scram_test
-        SCRAM_TEST_PGPASSWORD: test4scram
-        TEST_SKIP_NATIVE: ${{ matrix.node == 20 }}
     steps:
       - name: Show OS
         run: |
@@ -78,17 +58,6 @@ jobs:
   test-ts:
     timeout-minutes: 10
     needs: lint
-    services:
-      postgres:
-        image: postgres:11
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ci_db_test
-          POSTGRES_HOST_AUTH_METHOD: 'md5'
-        ports:
-          - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       fail-fast: false
       matrix:
@@ -103,15 +72,6 @@ jobs:
           - ubuntu-latest
     name: test ts - node v${{ matrix.node }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    env:
-        PGUSER: postgres
-        PGHOST: localhost
-        PGPASSWORD: postgres
-        PGDATABASE: ci_db_test
-        PGTESTNOSSL: 'true'
-        SCRAM_TEST_PGUSER: scram_test
-        SCRAM_TEST_PGPASSWORD: test4scram
-        TEST_SKIP_NATIVE: ${{ matrix.node == 20 }}
     steps:
       - name: Show OS
         run: |
