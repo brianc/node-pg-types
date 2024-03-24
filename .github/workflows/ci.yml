@@ -46,7 +46,7 @@ jobs:
           - '20'
         os:
           - ubuntu-latest
-    name: Test JavaScript - Node.js ${{ matrix.node }} (${{ matrix.os }})
+    name: test js - node v${{ matrix.node }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     env:
         PGUSER: postgres
@@ -101,7 +101,7 @@ jobs:
           - '20'
         os:
           - ubuntu-latest
-    name: Test TypeScript - Node.js ${{ matrix.node }} (${{ matrix.os }})
+    name: test ts - node v${{ matrix.node }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     env:
         PGUSER: postgres
