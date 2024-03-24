@@ -5,10 +5,11 @@ on: [push, pull_request]
 permissions:
   contents: read
 
+runs-on: ubuntu-latest
+
 jobs:
   lint:
     timeout-minutes: 5
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,7 +22,6 @@ jobs:
       - run: yarn lint
   test-js:
     timeout-minutes: 10
-    runs-on: ubuntu-latest
     needs: lint
     strategy:
       fail-fast: false
@@ -34,7 +34,6 @@ jobs:
           - '18'
           - '20'
     name: test js - node v${{ matrix.node }}
-    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,7 +46,6 @@ jobs:
       - run: yarn test
   test-ts:
     timeout-minutes: 10
-    runs-on: ubuntu-latest
     needs: lint
     strategy:
       fail-fast: false
@@ -60,7 +58,6 @@ jobs:
           - '18'
           - '20'
     name: test ts - node v${{ matrix.node }}
-    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
         with:
