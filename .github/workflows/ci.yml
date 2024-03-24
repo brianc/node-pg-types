@@ -38,13 +38,6 @@ jobs:
     name: test js - node v${{ matrix.node }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Show OS
-        run: |
-          uname -a
-      - run: |
-          psql \
-            -c "SET password_encryption = 'scram-sha-256'" \
-            -c "CREATE ROLE scram_test LOGIN PASSWORD 'test4scram'"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -73,13 +66,6 @@ jobs:
     name: test ts - node v${{ matrix.node }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Show OS
-        run: |
-          uname -a
-      - run: |
-          psql \
-            -c "SET password_encryption = 'scram-sha-256'" \
-            -c "CREATE ROLE scram_test LOGIN PASSWORD 'test4scram'"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
