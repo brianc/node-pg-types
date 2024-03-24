@@ -10,14 +10,9 @@ jobs:
     timeout-minutes: 2
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup
         with:
           node-version: 18
-          cache: yarn
-      - run: yarn install # --frozen-lockfile TODO get this option working
       - run: yarn lint
   test-js:
     timeout-minutes: 2
@@ -35,14 +30,9 @@ jobs:
           - '20'
     name: test js - node v${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup
         with:
           node-version: ${{ matrix.node }}
-          cache: yarn
-      - run: yarn install # --frozen-lockfile TODO get this option working
       - run: yarn test
   test-ts:
     timeout-minutes: 2
@@ -52,7 +42,6 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          # - '10' dropped support due to error postgres-array@3.0.2: The engine "node" is incompatible with this module. Expected version ">=12". Got "10.24.1"
           - '12'
           - '14'
           - '16'
@@ -60,12 +49,7 @@ jobs:
           - '20'
     name: test ts - node v${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup
         with:
           node-version: ${{ matrix.node }}
-          cache: yarn
-      - run: yarn install # --frozen-lockfile TODO get this option working
       - run: yarn test-ts
