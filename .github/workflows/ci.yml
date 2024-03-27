@@ -35,7 +35,6 @@ jobs:
           - '16'
           - '18'
           - '20'
-    name: test js - node v${{ matrix.node }}
     steps:
       - uses: actions/checkout@v4
         with:
