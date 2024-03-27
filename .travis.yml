@@ -1,9 +1,0 @@
-language: node_js
-node_js:
-  - '10'
-  - 'lts/*'
-matrix:
-  include:
-    - name: 'Code Coverage'
-      node_js: 'stable'
-      script: 'npm run coverage-ci'
