@@ -53,5 +53,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: yarn install # --frozen-lockfile TODO get this option working
-      - run: yarn test-ts
+      - run: npm install
+      - run: npm run test-ts
