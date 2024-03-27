@@ -7,7 +7,8 @@
     "coverage": "nyc --reporter=html npm test && open-cli coverage/index.html",
     "coverage-ci": "nyc --reporter=lcov npm test && codecov",
     "lint": "standard",
-    "test": "tape test/*.js | tap-spec && npm run test-ts && npm run lint",
+    "test": "npm run test-js && npm run test-ts && npm run lint",
+    "test-js": "tape test/*.js | tap-spec",
     "test-ts": "tsd"
   },
   "repository": {

@@ -40,9 +40,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: yarn
-      - run: yarn install # --frozen-lockfile TODO get this option working
-      - run: yarn test
+      - run: npm install
+      - run: npm test
+
   test-ts:
     timeout-minutes: 2
     runs-on: ubuntu-latest
