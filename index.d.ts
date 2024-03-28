@@ -58,7 +58,8 @@ export enum builtins {
   REGDICTIONARY = 3769,
   JSONB = 3802,
   REGNAMESPACE = 4089,
-  REGROLE = 4096
+  REGROLE = 4096,
+  AGTYPE = 17260
 }
 
 export type TypeId = builtins;

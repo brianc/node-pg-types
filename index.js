@@ -1,5 +1,6 @@
 const textParsers = require('./lib/textParsers')
 const binaryParsers = require('./lib/binaryParsers')
+const graphParsers = require('./lib/graphParsers')
 const builtinTypes = require('./lib/builtins')
 
 exports.getTypeParser = getTypeParser
@@ -45,4 +46,8 @@ textParsers.init(function (oid, converter) {
 
 binaryParsers.init(function (oid, converter) {
   typeParsers.binary[oid] = converter
+})
+
+graphParsers.init(function (oid, converter) {
+  typeParsers.text[oid] = converter
 })

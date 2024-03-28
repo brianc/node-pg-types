@@ -795,6 +795,25 @@ exports.circle = {
   ]
 }
 
+exports.agtype = {
+  format: 'text',
+  id: 17260,
+  tests: [
+    ['{"id": 844424930131971, "label": "person", "properties": {"name": "Queen Garcia"}}::vertex', function (t, value) {
+      t.deepEqual(
+        value, {
+          type: 'vertex',
+          id: 844424930131971,
+          label: 'person',
+          properties: {
+            name: 'Queen Garcia'
+          }
+        }
+      )
+    }]
+  ]
+}
+
 function dateEquals () {
   const timestamp = Date.UTC.apply(Date, arguments)
   return function (t, value) {
