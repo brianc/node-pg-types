@@ -12,7 +12,7 @@ const typeParsers = {
 }
 
 // the empty parse function
-const noParse = String;
+const noParse = String
 
 // returns a function used to convert a specific type (specified by
 // oid) into a result javascript type
