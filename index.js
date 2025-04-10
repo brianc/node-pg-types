@@ -31,9 +31,6 @@ function setTypeParser (oid, format, parseFn) {
     parseFn = format
     format = 'text'
   }
-  if (!Number.isInteger(oid)) {
-    throw new TypeError('oid must be an integer: ' + oid)
-  }
   typeParsers[format][oid] = parseFn
 };
 
