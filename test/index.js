@@ -3,6 +3,8 @@ const test = require('tape')
 const getTypeParser = require('../').getTypeParser
 const types = require('./types')
 
+process.env.TZ = 'Asia/Riyadh'
+
 test('types', function (t) {
   Object.keys(types).forEach(function (typeName) {
     const type = types[typeName]
