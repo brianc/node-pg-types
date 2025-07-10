@@ -11,13 +11,13 @@ npm run generate
 
 This will:
 
-- Start PostgreSQL 11 in a container
+- Start all specified Postgres versions in containers
 - Run the generator in another container
 - Query for builtin type OIDs
 - Generate `../lib/builtins.js`
 - Tear down the containers
 
-## Adding PostgreSQL versions
+## Adding PostgreSQL Versions
 
 To query additional PostgreSQL versions, edit the files in this directory:
 
