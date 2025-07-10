@@ -38,7 +38,6 @@ async function queryPostgresVersion (version) {
   }
 }
 
-
 async function generate () {
   console.log('Starting PostgreSQL type generation...')
 
