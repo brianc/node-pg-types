@@ -50,10 +50,14 @@ const legacyTypes = {
 async function generate () {
   console.log('Starting PostgreSQL type generation...')
 
-  // Query all available PostgreSQL versions
+  // Query all available PostgreSQL versions in parallel
+  const typeResults = await Promise.all(
+    postgresVersions.map(version => queryPostgresVersion(version))
+  )
+
+  // Merge all types from different versions
   let allTypes = {}
-  for (const version of postgresVersions) {
-    const types = await queryPostgresVersion(version)
+  for (const types of typeResults) {
     allTypes = { ...allTypes, ...types }
   }
 
