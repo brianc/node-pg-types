@@ -8,12 +8,12 @@ const query = `
 SELECT json_object_agg(UPPER(PT.typname), PT.oid::int4 ORDER BY pt.oid)
 FROM pg_type PT
 WHERE typnamespace = (SELECT pgn.oid FROM pg_namespace pgn WHERE nspname = 'pg_catalog') -- Take only builting Postgres types with stable OID (extension types are not guaranted to be stable)
-AND typtype = 'b' -- Only basic types
+AND typtype IN ('b', 'r', 'm') -- Only basic (b), range (r), and multirange (m) types
 AND typelem = 0 -- Ignore aliases
 AND typisdefined -- Ignore undefined types
 `
 
-const postgresVersions = ['11']
+const postgresVersions = ['11', '14']
 
 async function queryPostgresVersion (version) {
   const host = `postgres-${version}`
