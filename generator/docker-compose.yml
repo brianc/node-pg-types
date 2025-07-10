@@ -1,0 +1,22 @@
+services:
+  postgres-11:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  generator:
+    image: node:20-alpine
+    working_dir: /app
+    command: node generator/generate.js
+    depends_on:
+      postgres-11:
+        condition: service_healthy
+    volumes:
+      - ../:/app
+    environment:
+      OUTPUT_PATH: /app/lib

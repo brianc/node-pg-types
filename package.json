@@ -6,6 +6,7 @@
   "scripts": {
     "coverage": "nyc --reporter=html npm test && open-cli coverage/index.html",
     "coverage-ci": "nyc --reporter=lcov npm test && codecov",
+    "generate": "docker compose --project-directory generator run --rm generator",
     "lint": "standard",
     "test": "npm run test-js && npm run test-ts && npm run lint",
     "test-js": "tape test/*.js | tap-spec",
@@ -31,6 +32,7 @@
     "codecov": "^3.8.1",
     "nyc": "^15.1.0",
     "open-cli": "^6.0.1",
+    "pg": "^8.11.3",
     "standard": "^16.0.3",
     "tap-spec": "^5.0.0",
     "tape": "^5.2.2",
