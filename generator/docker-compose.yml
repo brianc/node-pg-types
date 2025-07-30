@@ -9,12 +9,24 @@ services:
       timeout: 5s
       retries: 5
 
+  postgres-14:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   generator:
     image: node:20-alpine
     working_dir: /app
     command: node generator/generate.js
     depends_on:
       postgres-11:
+        condition: service_healthy
+      postgres-14:
         condition: service_healthy
     volumes:
       - ../:/app
