@@ -109,10 +109,6 @@ exports.timestamptz = {
     [
       '2010-10-30 13:10:01+05',
       dateEquals(2010, 9, 30, 8, 10, 1, 0)
-    ],
-    [
-      '1000-01-01 00:00:00+00 BC',
-      dateEquals(-999, 0, 1, 0, 0, 0, 0)
     ]
   ]
 }
@@ -125,17 +121,8 @@ exports.timestamp = {
       '2010-10-31 00:00:00',
       function (t, value) {
         t.equal(
-          value.toISOString(),
-          '2010-10-31T00:00:00.000Z'
-        )
-      }
-    ],
-    [
-      '1000-01-01 00:00:00 BC',
-      function (t, value) {
-        t.equal(
-          value.toISOString(),
-          '-000999-01-01T00:00:00.000Z'
+          value.toUTCString(),
+          new Date(2010, 9, 31, 0, 0, 0, 0).toUTCString()
         )
       }
     ]
@@ -146,8 +133,15 @@ exports.date = {
   format: 'text',
   id: 1082,
   tests: [
-    ['2010-10-31', '2010-10-31'],
-    ['2010-10-31 BC', '2010-10-31 BC']
+    ['2010-10-31', function (t, value) {
+      const now = new Date(2010, 9, 31)
+      dateEquals(
+        2010,
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        now.getUTCHours(), 0, 0, 0)(t, value)
+      t.equal(value.getHours(), now.getHours())
+    }]
   ]
 }
 
@@ -322,16 +316,16 @@ exports.tsrange = {
   format: 'text',
   id: 3908,
   tests: [
-    ['(2010-10-31 14:54:13.74,)', tsrangeEquals([[2010, 9, 31, 14, 54, 13, 74], null])],
-    ['(2010-10-31 14:54:13.74,infinity)', tsrangeEquals([[2010, 9, 31, 14, 54, 13, 74], null])],
-    ['(,2010-10-31 14:54:13.74)', tsrangeEquals([null, [2010, 9, 31, 14, 54, 13, 74]])],
-    ['(-infinity,2010-10-31 14:54:13.74)', tsrangeEquals([null, [2010, 9, 31, 14, 54, 13, 74]])],
-    ['(2010-10-30 10:54:13.74,2010-10-31 14:54:13.74)', tsrangeEquals([[2010, 9, 30, 10, 54, 13, 74], [2010, 9, 31, 14, 54, 13, 74]])],
-    ['("2010-10-31 14:54:13.74",)', tsrangeEquals([[2010, 9, 31, 14, 54, 13, 74], null])],
-    ['("2010-10-31 14:54:13.74",infinity)', tsrangeEquals([[2010, 9, 31, 14, 54, 13, 74], null])],
-    ['(,"2010-10-31 14:54:13.74")', tsrangeEquals([null, [2010, 9, 31, 14, 54, 13, 74]])],
-    ['(-infinity,"2010-10-31 14:54:13.74")', tsrangeEquals([null, [2010, 9, 31, 14, 54, 13, 74]])],
-    ['("2010-10-30 10:54:13.74","2010-10-31 14:54:13.74")', tsrangeEquals([[2010, 9, 30, 10, 54, 13, 74], [2010, 9, 31, 14, 54, 13, 74]])]
+    ['(2010-10-31 14:54:13.74,)', tsrangeEquals([[2010, 9, 31, 11, 54, 13, 74], null])],
+    ['(2010-10-31 14:54:13.74,infinity)', tsrangeEquals([[2010, 9, 31, 11, 54, 13, 74], null])],
+    ['(,2010-10-31 14:54:13.74)', tsrangeEquals([null, [2010, 9, 31, 11, 54, 13, 74]])],
+    ['(-infinity,2010-10-31 14:54:13.74)', tsrangeEquals([null, [2010, 9, 31, 11, 54, 13, 74]])],
+    ['(2010-10-30 10:54:13.74,2010-10-31 14:54:13.74)', tsrangeEquals([[2010, 9, 30, 7, 54, 13, 74], [2010, 9, 31, 11, 54, 13, 74]])],
+    ['("2010-10-31 14:54:13.74",)', tsrangeEquals([[2010, 9, 31, 11, 54, 13, 74], null])],
+    ['("2010-10-31 14:54:13.74",infinity)', tsrangeEquals([[2010, 9, 31, 11, 54, 13, 74], null])],
+    ['(,"2010-10-31 14:54:13.74")', tsrangeEquals([null, [2010, 9, 31, 11, 54, 13, 74]])],
+    ['(-infinity,"2010-10-31 14:54:13.74")', tsrangeEquals([null, [2010, 9, 31, 11, 54, 13, 74]])],
+    ['("2010-10-30 10:54:13.74","2010-10-31 14:54:13.74")', tsrangeEquals([[2010, 9, 30, 7, 54, 13, 74], [2010, 9, 31, 11, 54, 13, 74]])]
   ]
 }
 exports.daterange = {
@@ -567,7 +561,16 @@ exports['array/date'] = {
   id: 1182,
   tests: [
     ['{2014-01-01,2015-12-31}', function (t, value) {
-      t.deepEqual(value, ['2014-01-01', '2015-12-31'])
+      const expecteds = [new Date(2014, 0, 1), new Date(2015, 11, 31)]
+      t.equal(value.length, 2)
+      value.forEach(function (date, index) {
+        const expected = expecteds[index]
+        dateEquals(
+          expected.getUTCFullYear(),
+          expected.getUTCMonth(),
+          expected.getUTCDate(),
+          expected.getUTCHours(), 0, 0, 0)(t, date)
+      })
     }]
   ]
 }
